@@ -1,0 +1,26 @@
+// Global SCSS styling
+// @see https://docs.nativescript.org/ui/styling
+Frame {
+    action-bar-visibility: never;
+    background-color: black;
+}
+
+Page {
+    background-color: black;
+    // background-color: white;
+}
+
+.fx {
+    height: 100%;
+    width: 100%;
+}
+
+.fas {
+    font-family: "Font Awesome 5 Free", "fa-solid-900";
+    font-weight: 900;
+}
+
+.far {
+    font-family: "Font Awesome 5 Free", "fa-regular-400";
+    font-weight: 400;
+}
