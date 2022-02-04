@@ -51,7 +51,6 @@ mounted () {}
 #root {
     width: 212;
     height: 212;
-    border-radius: 212;
     background-color: #187015;
 }
 

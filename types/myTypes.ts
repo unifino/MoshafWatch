@@ -87,13 +87,13 @@ export type here =
 
 export type vahy = {
     aID: number,
-    text: string, 
-    type: Kalameh
+    text: string,
+    type: Kalam
 }[];
 
 // -- =====================================================================================
 
-export type Kalameh =
+export type Kalam =
       "quran"
     | "number"
     | "ESM"
