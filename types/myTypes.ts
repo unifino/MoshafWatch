@@ -203,7 +203,7 @@ export type DisplayTypes = "List_1" | "List_2" | "Flex_T" | "Flex_B";
 
 // -- =====================================================================================
 
-export type tempActions =
+export type earthActions =
       "BugReport"
     | "Fav+"
     | "Fav-"
@@ -212,7 +212,7 @@ export type tempActions =
     | "Comment"
     ;
 
-export type tempParcel = [ "H"|"Q", number, string? ];
-export type tempValue = tempParcel | [ tempParcel, tempParcel ];
+export type earthParcel = [ "H"|"Q", number, string? ];
+export type earthValue = earthParcel | [ earthParcel, earthParcel ];
 
-export type tempRaw = [ tempActions, tempValue ]
+export type earthRaw = [ earthActions, earthValue ]

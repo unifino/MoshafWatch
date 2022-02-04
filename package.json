@@ -1,9 +1,9 @@
 {
-  "name": "new_one",
+  "name": "moshaf-watch",
   "main": "main.js",
   "version": "1.0.0",
-  "description": "A native application built with NativeScript-Vue",
-  "author": "unifino <unifino@protonmail.com>",
+  "description": "Moshaf Watch",
+  "author": "fitored <unifino@protonmail.com>",
   "license": "MIT",
   "dependencies": {
     "@nativescript/core": "^7.0.3",

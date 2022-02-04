@@ -15,8 +15,8 @@ let trace_h : number[];
 let fav_q   : number[];
 let fav_h   : number[];
 let comments: string[];
-let cloud   : TS.tempRaw[][];
-let earth   : TS.tempRaw[];
+let cloud   : TS.earthRaw[][];
+let earth   : TS.earthRaw[];
 export let rawBound: TS.RawBound;
 
 const exStorage = android.os.Environment.getExternalStorageDirectory();
@@ -181,7 +181,7 @@ export function rawBoundConvertor ( rawBound: [ string, string ][] ): TS.CakeBou
 
 // -- =====================================================================================
 
-// export function tempActionREC ( action: TS.tempActions, value: TS.tempValue ) {
+// export function earthActionREC ( action: TS.earthActions, value: TS.earthValue ) {
 
 //     switch ( action ) {
 
