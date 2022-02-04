@@ -1,29 +1,38 @@
 <template>
 <Page>
+<GridLayout rows="*,auto" class="fx">
 
 <!---------------------------------------------------------------------------------------->
 
-    <GridLayout class="fx">
-        <ScrollView verticalAlignment="middle" scrollBarIndicatorVisible="true">
-            <FlexboxLayout
-                id="rail"
-                flexWrap="wrap"
-                flexDirection="row-reverse"
-                justifyContent="space-around"
-            >
-                <Kalam
-                    v-for="(kalam,i) in vahy"
-                    :key="i"
-                    :aID=kalam.aID
-                    :myText=kalam.text
-                    :myType="kalam.type"
-                />
-            </FlexboxLayout>
-        </ScrollView>
-    </GridLayout>
+    <ScrollView row=0 verticalAlignment="middle" scrollBarIndicatorVisible="true">
+        <FlexboxLayout
+            id="rail"
+            flexWrap="wrap"
+            flexDirection="row-reverse"
+            justifyContent="space-around"
+        >
+            <Kalam
+                v-for="(kalam,i) in vahy"
+                :key="i"
+                :aID=kalam.aID
+                :myText=kalam.text
+                :myType="kalam.type"
+            />
+        </FlexboxLayout>
+    </ScrollView>
 
 <!---------------------------------------------------------------------------------------->
 
+    <Label row=1 class="suraName">
+        <FormattedString>
+            <Span :text="suraName" />
+            <Span :text="suraIDx" fontFamily="MADDINA" fontSize=8 fontWeight="bold" />
+        </FormattedString>
+    </Label>
+
+<!---------------------------------------------------------------------------------------->
+
+</GridLayout>
 </Page>
 </template>
 
@@ -56,6 +65,8 @@ export default class Qertas extends Vue {
 // -- =====================================================================================
 
 vahy: TS.vahy = [];
+suraName: string = "";
+suraIDx: string = "";
 
 // -- =====================================================================================
 
@@ -65,7 +76,7 @@ mounted () {
 
 // -- =====================================================================================
 
-init ( id: number ) {
+init ( id?: number ) {
 
     let ayat: number[] = [];
 
@@ -85,8 +96,18 @@ init ( id: number ) {
     // .. get message
     this.vahy = this.rouh( ayat );
 
+    // .. get the name
+    if ( true ) {
+        const sura = Quran[ ayat[0] ].sura;
+        // .. title of sura
+        this.suraName = asma[ sura -1 ][1];
+        // .. IDx of sura
+        this.suraIDx = "  ( " + sura + " ) ";
+    }
+
     // .. always has Besmellah
-    if ( this.vahy[0].aID !== 0 ) this.vahy.unshift( { aID: 0, text: ";", type: "ESM" } );
+    if ( this.vahy[0].text !== ";" )
+        this.vahy.unshift( { aID: 0, text: ";", type: "ESM" } );
 
 }
 
@@ -147,7 +168,17 @@ saheb () {
 /* ------------------------------------------- */
 
 #rail {
-    padding: 44 14 44 14;
+    padding: 23 14 44 14;
+}
+
+.suraName {
+    font-family: Homa;
+    font-size: 7;
+    width: 100%;
+    text-align: center;
+    color: #8f8e8c;
+    padding-top: 15;
+    /* background-color: red; */
 }
 
 .ESM {
@@ -174,7 +205,7 @@ saheb () {
     text-align: center;
     font-size: 16;
     padding-top: 1.2;
-    margin: 14 30% 14 30%;
+    margin: 12 30% 12 30%;
     width: 23;
     height: 23;
     align-self: center;
