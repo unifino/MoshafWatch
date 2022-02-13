@@ -4,7 +4,7 @@ declare var android; // required if tns-platform-declarations is not installed
 
 import Vue                              from 'nativescript-vue'
 import App_Basement                     from '@/components/Basement.vue'
-import store from './store'
+import store                            from '@/store/store'
 import * as NS                          from "@nativescript/core"
 import { route }                        from '@/mixins/router'
 

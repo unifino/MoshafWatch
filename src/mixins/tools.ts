@@ -40,11 +40,11 @@ export function saheb ( from: "Q"|"H" ) {
 //     try{ toasty.cancel() } catch {}
 //     if ( !msg ) return 0;
 
-//     let pad = "";
-//     if ( msg.length < 7 ) for( let i=0; i< 7-msg.length; i++ ) pad += " ";
+// //     let pad = "";
+// //     if ( msg.length < 7 ) for( let i=0; i< 7-msg.length; i++ ) pad += " ";
 
-//     if ( pad ) msg = '\n' + pad + msg.replace( "\n", "" ) + pad + '\n';
-//     else msg = '\n' + pad + msg + pad + '\n';
+// //     if ( pad ) msg = '\n' + pad + msg.replace( "\n", "" ) + pad + '\n';
+// //     else msg = '\n' + pad + msg + pad + '\n';
 
 //     toasty = Toast.makeText( msg, duration );
 

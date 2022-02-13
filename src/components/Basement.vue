@@ -21,6 +21,7 @@ import { Vue, Component, Prop }         from "vue-property-decorator"
 import Welcome                          from "@/components/Welcome.vue"
 import { asma, Quran }                  from "@/db/Q/Quran"
 import * as tools                       from "@/mixins/tools"
+import * as NS                          from "@nativescript/core"
 
 // -- =====================================================================================
 
@@ -34,7 +35,11 @@ export default class Base extends Vue {
 
 // -- =====================================================================================
 
-mounted () {}
+mounted () {
+    let x = NS.knownFolders.documents()
+    console.log(x);
+    
+}
 
 // -- =====================================================================================
 
