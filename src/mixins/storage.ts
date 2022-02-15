@@ -6,18 +6,16 @@ import * as NS                          from "@nativescript/core"
 import * as TS                          from "@/../types/myTypes"
 import store                            from "@/store/store"
 import { asma, Quran }                  from "@/db/Q/Quran"
-// import { Hadith }                       from "@/db/H/Al-Hadith"
+import { Hadith }                       from "@/db/H/Al-Hadith"
 
 // -- =====================================================================================
 
-const exStorage = android.os.Environment.getExternalStorageDirectory();
-const SDCard: string = exStorage.getAbsolutePath().toString();
-
-let myFolder            : NS.Folder;// * do not initiate it
-export let trace_q_File : NS.File;  // * do not initiate it
-export let trace_h_File : NS.File;  // * do not initiate it
-export let cloud_File   : NS.File;  // * do not initiate it
-let earth_File          : NS.File;  // * do not initiate it
+let myFolder            : NS.Folder = NS.knownFolders.documents().getFolder( "internal" );
+let bp                  : string  = myFolder.path;
+export let trace_q_File : NS.File = NS.File.fromPath( NS.path.join( bp, "trace_q.json" ) );
+export let trace_h_File : NS.File = NS.File.fromPath( NS.path.join( bp, "trace_h.json" ) );
+export let cloud_File   : NS.File = NS.File.fromPath( NS.path.join( bp, "cloud.json"   ) );
+export let earth_File   : NS.File = NS.File.fromPath( NS.path.join( bp, "earth.json"   ) );
 
 let trace_q     : number[];
 let trace_h     : number[];
@@ -29,16 +27,6 @@ let earth: TS.earthRaw[];
 export function db_check (): Promise<void> {
 
     return new Promise ( (rs, rx) => {
-
-        // .. permission policy has been meet, so assign necessarily Folders!
-        myFolder  = NS.Folder.fromPath( NS.path.join( SDCard, "Moshaf" ) );
-
-        // .. init
-        let bp = myFolder.path;
-        trace_q_File = NS.File.fromPath ( NS.path.join( bp, "trace_q.json"  ) );
-        trace_h_File = NS.File.fromPath ( NS.path.join( bp, "trace_h.json"  ) );
-        cloud_File   = NS.File.fromPath ( NS.path.join( bp, "cloud.json"    ) );
-        earth_File   = NS.File.fromPath ( NS.path.join( bp, "earth.json"    ) );
 
         // .. get Contents
         try { trace_q = JSON.parse( trace_q_File.readTextSync() ) } catch { trace_q = [] }
@@ -62,8 +50,6 @@ export function db_check (): Promise<void> {
         store.state.cloud     = cloud;
         store.state.earth     = earth;
         store.state.cakeBound = rawBoundConvertor( data.rawBound );
-
-        // bound_transfer( rawBound );
 
         // .. resolve
         rs();

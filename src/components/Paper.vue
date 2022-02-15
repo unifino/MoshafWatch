@@ -5,7 +5,7 @@
 
     <GridLayout class="fx">
         <ScrollView verticalAlignment="middle" scrollBarIndicatorVisible="true">
-            <Label class="test" :text="str" />
+            <Label class="text" :text="str" />
         </ScrollView>
     </GridLayout>
 
@@ -32,7 +32,7 @@ import { asma, Quran }                  from "@/db/Q/Quran"
 
 // -- =====================================================================================
 
-export default class Qertas extends Vue {
+export default class Paper extends Vue {
 
 // -- =====================================================================================
 
@@ -58,13 +58,6 @@ init ( id: number ) {
 
 // -- =====================================================================================
 
-saheb () {
-    let id = tools.saheb( "Q" );
-    this.str = Quran[ id ].text;
-}
-
-// -- =====================================================================================
-
 }
 
 // -- =====================================================================================
@@ -77,7 +70,7 @@ saheb () {
 
 /* ------------------------------------------- */
 
-.test {
+.text {
     font-family: Homa;
     /* white-space: pre; */
     padding: 14;

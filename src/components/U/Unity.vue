@@ -64,7 +64,7 @@ export default class Unity extends Vue {
 // -- =====================================================================================
 
 main_buttons = [
-    { icon: 'f5bb', class: '', f1: () => this.f( 0, "Qertas" ), f2: () => {} },
+    { icon: 'f5bb', class: '', f1: () => this.f( 0, "Maktub" ), f2: () => {} },
     { icon: 'f687', class: '', f1: () => this.f( 1, "Qertas" ), f2: () => {} },
     { icon: 'f684', class: '', f1: () => this.f( 2, "Paper" ),  f2: () => {} },
 

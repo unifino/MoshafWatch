@@ -6,6 +6,7 @@ import Welcome                          from "@/components/Welcome.vue"
 // import Base_00                          from "@/components/00/_00.vue"
 import Qertas                           from "@/components/Qertas.vue"
 import Paper                            from "@/components/Paper.vue"
+import Maktub                           from "@/components/Maktub.vue"
 // import Base_01                          from "@/components/01/_01.vue"
 // import Qertas                           from "@/components/00/Qertas.vue"
 // import Najwa                            from "@/components/01/Najwa.vue"
@@ -36,6 +37,7 @@ export function route ( address: TS.here, props?: {}, init?: boolean ) {
         // Base_01: { page: Base_01, duration: 300, transition: "flipLeft",    },
         Qertas:  { page: Qertas,  duration: 300, transition: "flipRight",    },
         Paper:   { page: Paper,   duration: 300, transition: "flipRight",    },
+        Maktub:  { page: Maktub,  duration: 300, transition: "flipRight",    },
         // Qertas:  { page: Qertas , duration: 300, transition: "slideTop",    },
         // Najwa:   { page: Najwa  , duration: 300, transition: "slideTop",    },
         // Lookup:  { page: Lookup , duration: 300, transition: "slideRight",  },

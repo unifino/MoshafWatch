@@ -65,7 +65,7 @@ Vue.mixin( {
 new Vue( {
     store,
     components: { App_Basement },
-    template: `<GridLayout> <App_Basement /> </GridLayout>`,
+    template: `<GridLayout backgroundColor="#18191a"> <App_Basement /> </GridLayout>`,
 } ).$start();
 
 // -- =====================================================================================

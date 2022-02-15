@@ -75,10 +75,10 @@ export type here =
     | 'Qertas'
 
     | 'Base_01'
-    | 'Paper'
+    | 'Maktub'
 
     | 'Base_10'
-    | 'Najwa'
+    | 'Paper'
 
     | 'Lookup'
     ;

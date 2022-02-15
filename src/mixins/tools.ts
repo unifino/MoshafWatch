@@ -1,8 +1,8 @@
 import * as TS                          from "@/../types/myTypes"
 import * as storage                     from "@/mixins/storage"
 import { asma, Quran }                  from "@/db/Q/Quran"
-// import { Hadith }                       from "@/db/H/Al-Hadith"
-// import { c_map }                        from "@/db/H/info"
+import { Hadith }                       from "@/db/H/Al-Hadith"
+import { c_map }                        from "@/db/H/info"
 // * tns plugin add nativescript-toast
 // import * as Toast                       from "nativescript-toast"
 
@@ -22,11 +22,11 @@ export function saheb ( from: "Q"|"H" ) {
     let saat = new Date();
     let rand: number;
     if ( from === "Q" ) rand = saat.getTime() % Quran.length;
-    // if ( from === "H" ) {
-    //     let tmp = [];
-    //     for ( let p of Hadith.filter( x => x ) ) tmp.push( p.n );
-    //     rand = tmp[ saat.getTime() % tmp.length ];
-    // };
+    if ( from === "H" ) {
+        let tmp = [];
+        for ( let p of Hadith.filter( x => x ) ) tmp.push( p.n );
+        rand = tmp[ saat.getTime() % tmp.length ];
+    };
     return rand;
 }
 
@@ -373,42 +373,42 @@ export function inFarsiLetters ( str: string ) {
 
 // -- =====================================================================================
 
-// export function getHadith ( id: number ) {
+export function getHadith ( id: number ) {
 
-//     let hadith: TS.Hadith = { obj: Hadith[ id ] } as any;
+    let hadith: TS.Hadith = { obj: Hadith[ id ] } as any;
 
-//     // .. mini patch
-//     if ( !Hadith[ id ].c || Hadith[ id ].c === null || Hadith[ id ].c > 19 )
-//         Hadith[ id ].c = 19;
-//     if ( !Hadith[ id ].b ) Hadith[ id ].b = "";
+    // .. mini patch
+    if ( !Hadith[ id ].c || Hadith[ id ].c === null || Hadith[ id ].c > 19 )
+        Hadith[ id ].c = 19;
+    if ( !Hadith[ id ].b ) Hadith[ id ].b = "";
 
-//     // .. assign the from whom
-//     hadith.from = c_map[ Hadith[ id ].c ][0];
-//     hadith.salam = c_map[ Hadith[ id ].c ][1];
-//     // .. assign arabic part
-//     hadith.kalamat = [];
-//     // .. assign arabi part
-//     hadith.arabi = simpleText( Hadith[ id ].a );
-//     // .. assign farsi part
-//     hadith.farsi = Hadith[ id ].b || "";
-//     // .. assign source
-//     hadith.source = Hadith[ id ].d || "";
+    // .. assign the from whom
+    hadith.from = c_map[ Hadith[ id ].c ][0];
+    hadith.salam = c_map[ Hadith[ id ].c ][1];
+    // .. assign arabic part
+    hadith.kalamat = [];
+    // .. assign arabi part
+    hadith.arabi = simpleText( Hadith[ id ].a );
+    // .. assign farsi part
+    hadith.farsi = Hadith[ id ].b || "";
+    // .. assign source
+    hadith.source = Hadith[ id ].d || "";
 
-//     let tmpBox = Hadith[ id ].a.replace( / +/g, " " ).trim().split( ' ' );
-//     let gFuse = false;
-//     for ( let tmp of tmpBox ) {
-//         if ( ( tmp.match( /<.?Q>/ ) || [] ).length ) {
-//             gFuse = !gFuse;
-//             tmp = tmp.replace( /<.?Q>/g, '' );
-//         }
-//         if ( tmp ) hadith.kalamat.push( { text: tmp, isGreen: gFuse } );
-//     }
+    let tmpBox = Hadith[ id ].a.replace( / +/g, " " ).trim().split( ' ' );
+    let gFuse = false;
+    for ( let tmp of tmpBox ) {
+        if ( ( tmp.match( /<.?Q>/ ) || [] ).length ) {
+            gFuse = !gFuse;
+            tmp = tmp.replace( /<.?Q>/g, '' );
+        }
+        // if ( tmp ) hadith.kalamat.push( { text: tmp, isGreen: gFuse } );
+    }
 
-//     hadith.toShare = getInfo( "H", id ).text;
+    hadith.toShare = getInfo( "H", id ).text;
 
-//     return hadith;
+    return hadith;
 
-// }
+}
 
 // -- =====================================================================================
 
@@ -423,46 +423,46 @@ function simpleText ( str ) {
 
 // -- =====================================================================================
 
-// export function getInfo ( source: TS.Source, id: number ) {
+export function getInfo ( source: TS.Source, id: number ) {
 
-//     let tmp: string,
-//         limit = 440,
-//         info: {
-//             source: TS.Source,
-//             id: number,
-//             text: string,
-//             previewText: string,
-//             address: string,
-//         } = <any>{};
+    let tmp: string,
+        limit = 440,
+        info: {
+            source: TS.Source,
+            id: number,
+            text: string,
+            previewText: string,
+            address: string,
+        } = <any>{};
 
-//     info.source = source;
-//     info.id = id;
+    info.source = source;
+    info.id = id;
 
-//     if ( source === "Q" ) {
-//         info.address = quranAddress( id );
-//         info.text = Quran[ id ].text + "\n\n" + info.address;
-//         tmp = Quran[ id ].text;
-//         if ( tmp.length > limit ) tmp = tmp.slice( 0, limit ) + " ...";
-//         info.previewText = tmp;
-//     }
+    if ( source === "Q" ) {
+        info.address = quranAddress( id );
+        info.text = Quran[ id ].text + "\n\n" + info.address;
+        tmp = Quran[ id ].text;
+        if ( tmp.length > limit ) tmp = tmp.slice( 0, limit ) + " ...";
+        info.previewText = tmp;
+    }
 
-//     if ( source === "H" ) {
-//         // ! .. not found ID causes ERROR!
-//         info.address = Hadith[ id ].d || "";
-//         info.text = textOfHadith( id );
-//         tmp = Hadith[ id ].a.replace( /<.?Q>/g, "" );
-//         if ( tmp.length > limit ) tmp = tmp.slice( 0, limit ) + " ...( المزيد )";
-//         info.previewText = tmp;
-//     }
+    if ( source === "H" ) {
+        // ! .. not found ID causes ERROR!
+        info.address = Hadith[ id ].d || "";
+        info.text = textOfHadith( id );
+        tmp = Hadith[ id ].a.replace( /<.?Q>/g, "" );
+        if ( tmp.length > limit ) tmp = tmp.slice( 0, limit ) + " ...( المزيد )";
+        info.previewText = tmp;
+    }
 
-//     if ( source === "C" ) {
-//         info.text = store.state.comments[ id ];
-//         info.previewText = store.state.comments[ id ];
-//     }
+    // if ( source === "C" ) {
+    //     info.text = store.state.comments[ id ];
+    //     info.previewText = store.state.comments[ id ];
+    // }
 
-//     return info;
+    return info;
 
-// }
+}
 
 // -- =====================================================================================
 
@@ -478,27 +478,27 @@ export function quranAddress ( id: number ) {
 
 // -- =====================================================================================
 
-// export function textOfHadith ( id: number ) {
+export function textOfHadith ( id: number ) {
 
-//     let str: string = "";
+    let str: string = "";
 
-//     // ! reset all Hadith
-//     // .. mini patch
-//     if ( !Hadith[ id ].c || Hadith[ id ].c === null || Hadith[ id ].c > 19 ) 
-//         Hadith[ id ].c = 19;
+    // ! reset all Hadith
+    // .. mini patch
+    if ( !Hadith[ id ].c || Hadith[ id ].c === null || Hadith[ id ].c > 19 )
+        Hadith[ id ].c = 19;
 
-//     str += c_map[ Hadith[ id ].c ][0];
-//     str += " )" + c_map[ Hadith[ id ].c ][1] + "(:\n\n";
-//     str += Hadith[ id ].a.replace( /<.?Q>/g, '' );
+    str += c_map[ Hadith[ id ].c ][0];
+    str += " )" + c_map[ Hadith[ id ].c ][1] + "(:\n\n";
+    str += Hadith[ id ].a.replace( /<.?Q>/g, '' );
 
-//     if ( Hadith[ id ].b ) str += "\n\n" + Hadith[ id ].b;
-//     if ( Hadith[ id ].d ) str += "\n\n" + Hadith[ id ].d;
+    if ( Hadith[ id ].b ) str += "\n\n" + Hadith[ id ].b;
+    if ( Hadith[ id ].d ) str += "\n\n" + Hadith[ id ].d;
 
 
-//     str = simpleText( str );
+    str = simpleText( str );
 
-//     return str;
+    return str;
 
-// }
+}
 
 // -- =====================================================================================

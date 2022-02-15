@@ -23,7 +23,8 @@ export function sync( mode: "down"|"up" ): Promise<void> {
 
 export function down_Cloud( filter: boolean = true ): Promise<void> {
 
-    let alreadyGotIDs: number[];
+    // .. get rows!
+    let alreadyGotIDs: number[] = [];
 
     if ( filter ) {
         // .. get IDs of already downloaded rows
@@ -33,7 +34,7 @@ export function down_Cloud( filter: boolean = true ): Promise<void> {
         }, [] );
     }
 
-    let url = cloudURL + "handshake?h=download&i=" + alreadyGotIDs.join( "," );
+    let url = cloudURL + "download?i=" + alreadyGotIDs.join( "," );
 
     return new Promise( (rs, rx) => {
 
@@ -73,7 +74,7 @@ export function down_Cloud( filter: boolean = true ): Promise<void> {
 
 export function up_Cloud(): Promise<void> {
 
-    let url = cloudURL + "handshake";
+    let url = cloudURL + "upload";
 
     return new Promise( (rs, rx) => {
 
@@ -82,7 +83,6 @@ export function up_Cloud(): Promise<void> {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             content: JSON.stringify( {
-                h: "upload",
                 d: JSON.stringify( store.state.earth )
             } )
         } )
@@ -92,27 +92,22 @@ export function up_Cloud(): Promise<void> {
                 let res = res_x.content.toJSON() as TS.cloud_response;
 
                 if ( res.status === 200 ) {
-                    // .. soft registration of data
-                    for ( let y of <TS.Architecture[]>res.answer ) {
-                        // ! test it with a better way
-                        try {
-                            let str = JSON.parse( JSON.stringify( y.patch ) );
-                            store.state.cloud[ y.id -1 ] = str;
-                        }
-                        catch (e) { console.log(e) }
-                    }
+                    // .. merge earth into the cloud
+                    store.state.cloud.push( store.state.earth );
+                    // .. purge earth
+                    store.state.earth = [];
                     // .. hard registration of data
                     storage.saveDB( storage.cloud_File, store.state.cloud );
+                    storage.saveDB( storage.earth_File, store.state.earth );
                     // .. resolve
                     rs();
-
                 }
                 else rx( res.status );
 
             },
-            e => rx( e + ' : 002 Server Collections!' )
+            e => rx( e + ' : 004 Server Collections!' )
         )
-        .catch( e => rx( e + ' : 001 Server Collections!' ) );
+        .catch( e => rx( e + ' : 003 Server Collections!' ) );
 
     } );
 

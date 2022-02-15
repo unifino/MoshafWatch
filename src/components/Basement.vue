@@ -2,7 +2,6 @@
 <AbsoluteLayout class="fx" ref="root" id="root">
 <!---------------------------------------------------------------------------------------->
 
-
     <Frame class="fx" id="_base_" ref="_base_" >
         <Welcome />
     </Frame>
@@ -35,11 +34,7 @@ export default class Base extends Vue {
 
 // -- =====================================================================================
 
-mounted () {
-    let x = NS.knownFolders.documents()
-    console.log(x);
-    
-}
+mounted () {}
 
 // -- =====================================================================================
 
