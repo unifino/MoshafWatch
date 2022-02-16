@@ -12,13 +12,13 @@ import { Hadith }                       from "@/db/H/Al-Hadith"
 
 let myFolder            : NS.Folder = NS.knownFolders.documents().getFolder( "internal" );
 let bp                  : string  = myFolder.path;
-export let trace_q_File : NS.File = NS.File.fromPath( NS.path.join( bp, "trace_q.json" ) );
-export let trace_h_File : NS.File = NS.File.fromPath( NS.path.join( bp, "trace_h.json" ) );
+// export let trace_q_File : NS.File = NS.File.fromPath( NS.path.join( bp, "trace_q.json" ) );
+// export let trace_h_File : NS.File = NS.File.fromPath( NS.path.join( bp, "trace_h.json" ) );
 export let cloud_File   : NS.File = NS.File.fromPath( NS.path.join( bp, "cloud.json"   ) );
 export let earth_File   : NS.File = NS.File.fromPath( NS.path.join( bp, "earth.json"   ) );
 
-let trace_q     : number[];
-let trace_h     : number[];
+// let trace_q     : number[];
+// let trace_h     : number[];
 let cloud: TS.earthRaw[][];
 let earth: TS.earthRaw[];
 
@@ -29,22 +29,22 @@ export function db_check (): Promise<void> {
     return new Promise ( (rs, rx) => {
 
         // .. get Contents
-        try { trace_q = JSON.parse( trace_q_File.readTextSync() ) } catch { trace_q = [] }
-        try { trace_h = JSON.parse( trace_h_File.readTextSync() ) } catch { trace_h = [] }
+        // try { trace_q = JSON.parse( trace_q_File.readTextSync() ) } catch { trace_q = [] }
+        // try { trace_h = JSON.parse( trace_h_File.readTextSync() ) } catch { trace_h = [] }
         try { cloud   = JSON.parse( cloud_File.readTextSync() )   } catch { cloud   = [] }
         try { earth   = JSON.parse( earth_File.readTextSync() )   } catch { earth   = [] }
 
         // .. check integrity
-        if ( !trace_q ) saveDB( trace_q_File,  [] );
-        if ( !trace_h ) saveDB( trace_h_File,  [] );
+        // if ( !trace_q ) saveDB( trace_q_File,  [] );
+        // if ( !trace_h ) saveDB( trace_h_File,  [] );
         if ( !cloud   ) saveDB( cloud_File,    [] );
         if ( !earth   ) saveDB( earth_File,    [] );
 
         // .. convert cloud and earth DBs to the old format
         let data = db_Parser( [ ...cloud, earth ] );
 
-        store.state.memo.Q    = trace_q;
-        store.state.memo.H    = trace_h;
+        // store.state.memo.Q    = trace_q;
+        // store.state.memo.H    = trace_h;
         store.state.fav.Q     = data.fav.Q;
         store.state.fav.H     = data.fav.H;
         store.state.cloud     = cloud;
@@ -97,19 +97,19 @@ export function db_Parser ( data: TS.earthRaw[][] ) {
                 case "Fav+":
                 case "Fav-": fav = db_PA1( parcel[0], p, fav ); break;
 
-                case "Bound":
-                case "Unbound": rawBound = db_PA2( parcel[0], p, rawBound ); break;
+                // case "Bound":
+                // case "Unbound": rawBound = db_PA2( parcel[0], p, rawBound ); break;
 
-                case "Comment":
-                    // .. add Comment-Text to the store
-                    let id = store.state.comments.push( parcel[1][2] ) -1;
-                    rawBound = db_PA3( parcel[0], [ p, [ "C", id ] ], rawBound );
-                    break;
+                // case "Comment":
+                //     // .. add Comment-Text to the store
+                //     let id = store.state.comments.push( parcel[1][2] ) -1;
+                //     rawBound = db_PA3( parcel[0], [ p, [ "C", id ] ], rawBound );
+                //     break;
 
-                case "BugReport":
-                    break;
+                // case "BugReport":
+                //     break;
 
-                default: console.log(parcel); break;
+                // default: console.log(parcel); break;
 
             }
 

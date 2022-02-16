@@ -1,5 +1,5 @@
 <template>
-<Page>
+<Page @navigatedTo="pageLoaded()">
 
 <!---------------------------------------------------------------------------------------->
 
@@ -13,6 +13,7 @@
 
                 <Label :text=hadith.from    class="name"    />
                 <Label :text=hadith.salam   class="name_e"  />
+                <Label :text="''"           class="divider" />
                 <Label :text=hadith.arabi   class="arabi"   />
                 <Label :text=hadith.farsi   class="farsi"   />
 
@@ -36,6 +37,7 @@ import * as tools                       from "@/mixins/tools"
 import { asma, Quran }                  from "@/db/Q/Quran"
 import { Hadith }                       from "@/db/H/Al-Hadith"
 import * as TS                          from "@/../types/myTypes"
+import store                            from "@/store/store"
 
 // -- =====================================================================================
 
@@ -64,6 +66,11 @@ mounted () {
 
 // -- =====================================================================================
 
+pageLoaded() {
+    store.state.here = 'Maktub';
+}
+
+// -- =====================================================================================
 init ( id?: number ) {
 
     // .. get a random Hadith Id
@@ -115,6 +122,11 @@ init ( id?: number ) {
     color: #5a5c53;
     padding: 3 14 40 14;
     font-size: 10;
+}
+
+.divider {
+    width: 100%;
+    height: 1;
 }
 
 </style>

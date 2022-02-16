@@ -1,5 +1,5 @@
 <template>
-<Page>
+<Page @navigatedTo="pageLoaded()">
 <GridLayout rows="*,auto" class="fx">
 
 <!---------------------------------------------------------------------------------------->
@@ -47,6 +47,7 @@ import * as tools                       from "@/mixins/tools"
 import { asma, Quran }                  from "@/db/Q/Quran"
 import Kalam                            from "@/components/X/Kalam.vue"
 import * as TS                          from "@/../types/myTypes"
+import store                            from "@/store/store"
 
 // -- =====================================================================================
 
@@ -76,6 +77,11 @@ mounted () {
 
 // -- =====================================================================================
 
+pageLoaded() {
+    store.state.here = 'Qertas';
+}
+
+// -- =====================================================================================
 init ( id?: number ) {
 
     let ayat: number[] = [];
@@ -172,40 +178,6 @@ rouh ( ayat: number[] ) {
     color: #8f8e8c;
     padding-top: 15;
     /* background-color: red; */
-}
-
-.ESM {
-    font-size: 110;
-    font-family: Besmellah_2;
-    margin-top: -40;
-    text-align: center;
-    color: #548505
-}
-
-.quran, .sajdeh {
-    font-family: Amiri-Regular;
-    font-family: Homa;
-    text-align: center;
-    font-size: 16;
-    color: white;
-    text-wrap: true;
-}
-
-.quran { color: #9e9e9e }
-.sajdeh { color: #1296ee }
-.number {
-    font-family: MADDINA;
-    text-align: center;
-    font-size: 16;
-    padding-top: 1.2;
-    margin: 12 30% 12 30%;
-    width: 23;
-    height: 23;
-    align-self: center;
-    border-radius: 99;
-    font-weight: bold;
-    background-color: #242424;
-    color: #26596d;
 }
 
 </style>

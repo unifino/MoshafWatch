@@ -50,6 +50,7 @@ import * as tools                       from "@/mixins/tools"
 import Saheb                            from "@/components/U/Saheb.vue"
 import myButton                         from "@/components/X/myButton.vue"
 import { route }                        from "@/mixins/router"
+import store                            from "@/store/store"
 
 // -- =====================================================================================
 
@@ -80,18 +81,14 @@ f ( buttonId: number, page: TS.here, prop? ) {
 
 // -- =====================================================================================
 
-// @tap="route( 'Paper', null, false )" @doubleTap="route( 'Paper', null, false )"
-
-// -- =====================================================================================
-
 mounted () {
 
 }
 
 // -- =====================================================================================
 
-pageLoaded () {
-
+pageLoaded() {
+    store.state.here = 'Unity';
 }
 
 // -- =====================================================================================

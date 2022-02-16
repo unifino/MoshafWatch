@@ -4,7 +4,8 @@ import { asma, Quran }                  from "@/db/Q/Quran"
 import { Hadith }                       from "@/db/H/Al-Hadith"
 import { c_map }                        from "@/db/H/info"
 // * tns plugin add nativescript-toast
-// import * as Toast                       from "nativescript-toast"
+import * as Toast                       from "nativescript-toast"
+import store                            from "@/store/store"
 
 // -- =====================================================================================
 
@@ -32,25 +33,25 @@ export function saheb ( from: "Q"|"H" ) {
 
 // -- =====================================================================================
 
-// let toaster_TO: NodeJS.Timeout | any;
-// let toasty;
-// export function toaster ( msg: string ="" , duration: "short" | "long" = "short" ) {
+let toaster_TO: NodeJS.Timeout | any;
+let toasty;
+export function toaster ( msg: string ="" , duration: "short" | "long" = "short" ) {
 
-//     if ( toaster_TO ) clearTimeout( toaster_TO );
-//     try{ toasty.cancel() } catch {}
-//     if ( !msg ) return 0;
+    if ( toaster_TO ) clearTimeout( toaster_TO );
+    try{ toasty.cancel() } catch {}
+    if ( !msg ) return 0;
 
-// //     let pad = "";
-// //     if ( msg.length < 7 ) for( let i=0; i< 7-msg.length; i++ ) pad += " ";
+//     let pad = "";
+//     if ( msg.length < 7 ) for( let i=0; i< 7-msg.length; i++ ) pad += " ";
 
-// //     if ( pad ) msg = '\n' + pad + msg.replace( "\n", "" ) + pad + '\n';
-// //     else msg = '\n' + pad + msg + pad + '\n';
+//     if ( pad ) msg = '\n' + pad + msg.replace( "\n", "" ) + pad + '\n';
+//     else msg = '\n' + pad + msg + pad + '\n';
 
-//     toasty = Toast.makeText( msg, duration );
+    toasty = Toast.makeText( msg, duration );
 
-//     toaster_TO = setTimeout( () => toasty.show() , 200 );
+    toaster_TO = setTimeout( () => toasty.show() , 200 );
 
-// }
+}
 
 // -- =====================================================================================
 
@@ -337,39 +338,42 @@ export function inFarsiLetters ( str: string ) {
 
 // -- =====================================================================================
 
-// export function toggleBound ( code_O: string, code_X: string ): TS.CakeBound { 
+export function toggleBound ( parcel_O: TS.earthParcel, parcel_X: TS.earthParcel ):
+{ action: TS.earthActions, data: TS.CakeBound } {
 
-//     // .. determine current BoundStatus
-//     let isBounded: boolean;
-//     isBounded = !!store.state.cakeBound[ code_X ];
-//     if ( isBounded ) isBounded = store.state.cakeBound[ code_X ].includes( code_O );
+    let code_O: string = parcel_O.join( "_" ),
+        code_X: string = parcel_X.filter( x => x !== null ).join( "_" );
 
-//     // .. insert New Bound Info!
-//     if ( !isBounded ) storage.rawBound.push( [ code_O, code_X ] );
-//     // .. remove CrossBound Info
-//     else {
-//         let r: number;
-//         r = storage.rawBound.findIndex( x => x[0] === code_O && x[1] === code_X );
-//         if ( ~r ) storage.rawBound.splice( r, 1 );
-//         r = storage.rawBound.findIndex( x => x[1] === code_O && x[0] === code_X );
-//         if ( ~r ) storage.rawBound.splice( r, 1 );
-//         // .. cache Bound Info!
-//         store.state.cacheBound.push( [ code_O, code_X ] );
-//     }
+    // .. determine current BoundStatus
+    let isBounded: boolean;
+    isBounded = !!store.state.cakeBound[ code_X ];
+    if ( isBounded ) isBounded = store.state.cakeBound[ code_X ].includes( code_O );
 
-//     // .. trim cacheBound
-//     if ( !isBounded ) {
-//         store.state.cacheBound = store.state.cacheBound.filter( x => {
-//             if ( x[0] === code_O && x[1] === code_X ) return false;
-//             if ( x[1] === code_O && x[0] === code_X ) return false;
-//             return true;
-//         } );
-//     }
+    // .. cache Bound Info!
+    if ( isBounded ) store.state.cacheBound.push( [ code_O, code_X ] );
 
-//     // .. re-calculation
-//     return storage.rawBoundConvertor( storage.rawBound );
+    // .. Hard Registration
+    let action: TS.earthActions = isBounded ? "Unbound" : "Bound";
+    storage.earthActionREC( action, [ parcel_O, parcel_X ] );
 
-// }
+    // .. trim cacheBound
+    if ( !isBounded ) {
+        store.state.cacheBound = store.state.cacheBound.filter( x => {
+            if ( x[0] === code_O && x[1] === code_X ) return false;
+            if ( x[1] === code_O && x[0] === code_X ) return false;
+            return true;
+        } );
+    }
+
+    // .. re-calculation
+    storage.re_calculation();
+
+    return {
+        action: isBounded ? "Unbound" : "Bound",
+        data: store.state.cakeBound
+    };
+
+}
 
 // -- =====================================================================================
 

@@ -1,10 +1,13 @@
 <template>
-<Page>
+<Page @navigatedTo="pageLoaded()">
 
 <!---------------------------------------------------------------------------------------->
 
-    <GridLayout>
-        <Image @tap="goToUnity" src="res://moshaf" width=165 stretch="aspectFit" />
+    <GridLayout >
+        <Image
+            @tap="route( 'Unity', null, false )"
+            src="res://moshaf" width=165 stretch="aspectFit" 
+        />
     </GridLayout>
 
 <!---------------------------------------------------------------------------------------->
@@ -19,9 +22,7 @@
 // -- =====================================================================================
 
 import { Vue, Component, Prop }         from "vue-property-decorator"
-import * as tools                       from "@/mixins/tools"
-import { asma, Quran }                  from "@/db/Q/Quran"
-import { route }                        from '@/mixins/router'
+import store                            from "@/store/store"
 
 // -- =====================================================================================
 
@@ -35,12 +36,12 @@ export default class Welcome extends Vue {
 
 // -- =====================================================================================
 
-mounted () { this.goToUnity() }
+mounted () {}
 
 // -- =====================================================================================
 
-goToUnity () {
-    route( 'Unity', null, false );
+pageLoaded() {
+    store.state.here = 'Welcome';
 }
 
 // -- =====================================================================================
