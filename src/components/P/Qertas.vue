@@ -198,6 +198,8 @@ scrollTo ( step: 1|-1 ) {
 
     let max_H = qertas.getActualSize().height;
 
+    // .. resolve a bug
+    if ( !this.$refs[ "kalam_" + this.scrollStep ] ) this.scrollStep--;
 
     let el = this.$refs[ "kalam_" + this.scrollStep ][0].nativeView;
     let h = el.getActualSize().height;
@@ -234,7 +236,7 @@ scrollTo ( step: 1|-1 ) {
     width: 100%;
     text-align: center;
     color: #8f8e8c;
-    padding-top: 15;
+    padding-top: 3;
     /* background-color: red; */
 }
 
