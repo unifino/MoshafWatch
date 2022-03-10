@@ -84,7 +84,7 @@ morning_buttons = [
 
 main_buttons = [
     { icon: 'f5bb', class: '', f1: () => this.f( 0, "Maktub" ), f2: () => {} },
-    { icon: 'f687', class: '', f1: () => this.f( 1, "Qertas" ), f2: () => {} },
+    { icon: 'f687', class: '', f1: () => this.f( 1, "Qertas" ), f2: () => this.f( 1, "Base_00") },
     { icon: 'f684', class: 'deactivated', f1: () => {},  f2: () => {} }
 ];
 

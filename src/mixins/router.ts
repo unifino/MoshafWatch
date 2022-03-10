@@ -3,7 +3,7 @@ import * as TS                          from "@/../types/myTypes"
 // import store                            from "@/store/store"
 
 import Welcome                          from "@/components/Welcome.vue"
-// import Base_00                          from "@/components/00/_00.vue"
+import Base_00                          from "@/components/P/_00.vue"
 import Qertas                           from "@/components/P/Qertas.vue"
 import Paper                            from "@/components/P/Paper.vue"
 import Maktub                           from "@/components/P/Maktub.vue"
@@ -33,7 +33,7 @@ export function route ( address: TS.here, props?: {}, init?: boolean ) {
     let paths: TS.Path = {
 
         Welcome: { page: Welcome, duration: 300, transition: "flipLeft",    },
-        // Base_00: { page: Base_00, duration: 300, transition: "flipLeft",    },
+        Base_00: { page: Base_00, duration: 300, transition: "flipLeft",    },
         // Base_01: { page: Base_01, duration: 300, transition: "flipLeft",    },
         Qertas:  { page: Qertas,  duration: 300, transition: "flipRight",    },
         Paper:   { page: Paper,   duration: 300, transition: "flipRight",    },

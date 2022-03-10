@@ -101,7 +101,6 @@ scrollTo ( step: 1|-1 ) {
 
     paper.scrollToVerticalOffset( sigma, step > 0 );
 
-
 }
 
 // -- =====================================================================================
@@ -121,7 +120,7 @@ scrollTo ( step: 1|-1 ) {
 .text {
     font-family: Homa;
     /* white-space: pre; */
-    padding: 14;
+    padding: 12;
     padding-top: 44;
     padding-bottom: 44;
     text-align: center;

@@ -4,16 +4,24 @@
 
 <!---------------------------------------------------------------------------------------->
 
-    <ScrollView row=0 verticalAlignment="middle" scrollBarIndicatorVisible="true">
+    <ScrollView
+        row=0
+        verticalAlignment="middle"
+        scrollBarIndicatorVisible="true"
+        ref="qertas"
+    >
         <FlexboxLayout
             id="rail"
             flexWrap="wrap"
             flexDirection="row-reverse"
             justifyContent="space-around"
+            @tap="scrollTo(+1)"
+            @doubleTap="scrollTo(-1)"
         >
             <Kalam
                 v-for="(kalam,i) in vahy"
                 :key="i"
+                :ref="'kalam_' + i"
                 :aID=kalam.aID
                 :myText=kalam.text
                 :myType="kalam.type"
@@ -82,6 +90,7 @@ pageLoaded() {
 }
 
 // -- =====================================================================================
+
 init ( id?: number ) {
 
     let ayat: number[] = [];
@@ -96,8 +105,20 @@ init ( id?: number ) {
     ];
     // .. Special-Favorite List
     else if ( id === -2 ) ayat = [ 0,261,0,3425,3426,3427,0,3967,3968,3969 ];
-    // .. Random & Simple Mode
-    else ayat = [ tools.saheb( "Q" ) ];
+    // .. Sura | Random & Simple Mode
+    else {
+        if ( typeof id === "undefined" ) ayat = [ tools.saheb( "Q" ) ];
+        else {
+            // .. make a copy
+            let aID = id;
+           // .. get the name
+            const sura = Quran[ id ].sura;
+            // .. get list
+            while ( Quran[ aID ].sura === sura ) {
+                ayat.push( aID ); aID++; if ( aID >= Quran.length ) break;
+            }
+        }
+    }
 
     // .. get message
     this.vahy = this.rouh( ayat );
@@ -123,7 +144,7 @@ rouh ( ayat: number[] ) {
 
     let vahy: TS.vahy = [];
 
-    // .. loop until end of sura
+    // .. loop on ayat
     for ( let aID of ayat ) {
 
         let q = Quran[ aID ];
@@ -149,6 +170,43 @@ rouh ( ayat: number[] ) {
     }
 
     return vahy;
+
+}
+
+
+// -- =====================================================================================
+
+scrollStep = 1;
+scrollTo ( step: 1|-1 ) {
+
+    let qertas = ( this.$refs as any ).qertas.nativeView;
+
+    // .. apply step
+    this.scrollStep += step;
+    // .. limit step corrector
+    let k_s = Object.keys( this.$refs ).filter( x => x.includes( "kalam" ) );
+    if ( this.scrollStep < 0 ) this.scrollStep = 0;
+    if ( this.scrollStep > k_s.length -1 ) this.scrollStep = k_s.length -1;
+
+    // .. skip number
+    if ( this.$refs[ "kalam_" + this.scrollStep ][0].myType === "number" ) 
+        step === 1 ? this.scrollStep++ : this.scrollStep--;
+
+    let sigma = 23;
+    for ( let i=0; i<this.scrollStep-1; i++ )
+        sigma += ( this.$refs[ "kalam_" + i ][0] as any ).nativeView.getActualSize().height;
+
+    let max_H = qertas.getActualSize().height;
+
+
+    let el = this.$refs[ "kalam_" + this.scrollStep ][0].nativeView;
+    let h = el.getActualSize().height;
+
+    // .. corrector
+    if ( h <= max_H ) sigma -= (max_H - h) /2;
+    if ( this.scrollStep < 1 ) sigma = 0;
+
+    qertas.scrollToVerticalOffset( sigma, step > 0 );
 
 }
 

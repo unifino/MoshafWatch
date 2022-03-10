@@ -202,6 +202,7 @@ destroyed () {}
     font-size: 110;
     font-family: Besmellah_2;
     margin-top: -40;
+    padding: 0 10;
     text-align: center;
     color: #548505
 }
