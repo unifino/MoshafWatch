@@ -1,5 +1,9 @@
 <template>
-<Page @navigatedTo="pageLoaded()">
+<Page @navigatedTo="pageLoaded()">:text=hadith.from    class="name"    />
+                <Label :text=hadith.salam   class="name_e"  />
+                <Label :text="''"           class="divider" />
+                <Label :text=hadith.arabi   class="arabi"   />
+                <Label :text=hadith.farsi   class="farsi"   />
 
 <!---------------------------------------------------------------------------------------->
 
@@ -11,11 +15,11 @@
                 justifyContent="center"
             >
 
-                <Label :text=hadith.from    class="name"    />
-                <Label :text=hadith.salam   class="name_e"  />
-                <Label :text="''"           class="divider" />
-                <Label :text=hadith.arabi   class="arabi"   />
-                <Label :text=hadith.farsi   class="farsi"   />
+                <Label :text=hadith.from  @tap="xrt" class="name"    />
+                <Label :text=hadith.salam @tap="xrt" class="name_e"  />
+                <Label :text="''"         @tap="xrt" class="divider" />
+                <Label :text=hadith.arabi @tap="xrt" class="arabi"   />
+                <Label :text=hadith.farsi @tap="xrt" class="farsi"   />
 
             </FlexboxLayout>
         </ScrollView>
@@ -71,6 +75,7 @@ pageLoaded() {
 }
 
 // -- =====================================================================================
+
 init ( id?: number ) {
 
     // .. get a random Hadith Id
@@ -78,6 +83,10 @@ init ( id?: number ) {
     this.hadith = tools.getHadith( id );
 
 }
+
+// -- =====================================================================================
+
+xrt () {}
 
 // -- =====================================================================================
 

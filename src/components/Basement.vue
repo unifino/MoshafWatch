@@ -1,5 +1,5 @@
 <template>
-<AbsoluteLayout class="fx" ref="root" id="root">
+<AbsoluteLayout class="fx" ref="root" id="root" @swipe="swipeControl">
 <!---------------------------------------------------------------------------------------->
 
     <Frame class="fx" id="_base_" ref="_base_" >
@@ -87,7 +87,7 @@ setup (): Promise<void> {
 // -- =====================================================================================
 
 to_Unity ( init = false ): void {
-    route( "Unity", null, init );
+    route( "Unity", { flip: "fade" }, init );
 }
 
 // -- =====================================================================================
@@ -110,7 +110,7 @@ backButtonCtl ( e: NS.AndroidActivityEventData|any ) {
             if ( store.state.routeStack.length > 1 ) e.cancel = false;
             else {
                 // .. Go to Page
-                route( "Welcome" );
+                route( "Welcome", e.fake ? { flip: "flipRight" } : null );
                 // .. do we need an upload?
                 if ( store.state.earth.length ) {
                     // .. notify
@@ -123,12 +123,12 @@ backButtonCtl ( e: NS.AndroidActivityEventData|any ) {
             }
             break;
 
-        // case "Base_00": e.cancel = false; break;
+        case "Base_00": e.cancel = false; break;
         // case "Base_01": e.cancel = false; break;
         // case "Base_10": e.cancel = false; break;
-        case "Paper"  : e.cancel = false; break;
-        case "Maktub" : e.cancel = false; break;
-        case "Qertas" : e.cancel = false; break;
+        case "Paper"  : e.cancel = false; if ( e.fake ) route( "Unity", { flip: "flipRight" } ); break;
+        case "Maktub" : e.cancel = false; if ( e.fake ) route( "Unity", { flip: "flipRight" } ); break;
+        case "Qertas" : e.cancel = false; if ( e.fake ) route( "Unity", { flip: "flipRight" } ); break;
 
         // .. let do more actions
         default: e.cancel = false; break;
@@ -137,9 +137,25 @@ backButtonCtl ( e: NS.AndroidActivityEventData|any ) {
 
     // .. reduce pageStack
     if ( !e.cancel )
-        if ( store.state.routeStack.length > 1 ) 
+        if ( store.state.routeStack.length > 1 )
             store.state.routeStack.pop();
 
+}
+
+
+// -- =====================================================================================
+
+swipeControl ( args: NS.SwipeGestureEventData ) {
+console.log(store.state.here);
+
+try {
+        if ( args.direction === NS.SwipeDirection.left ) this.backButtonCtl( { fake: true } );
+console.log(args.direction);
+
+} catch (e) {
+    console.log(e);
+    
+}
 }
 
 // -- =====================================================================================

@@ -6,7 +6,7 @@
     <GridLayout class="fx">
         <ScrollView verticalAlignment="middle" scrollBarIndicatorVisible="true" ref="paper">
             <StackLayout class="text">
-                <Label 
+                <Label
                     v-for="(str,i) of strBOX"
                     :key=i
                     :ref="'textRow_' + i"

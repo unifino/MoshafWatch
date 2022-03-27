@@ -1,5 +1,6 @@
 import { Vue, Component, Prop }         from "vue-property-decorator"
 import * as TS                          from "@/../types/myTypes"
+import * as NS                          from "@nativescript/core"
 // import store                            from "@/store/store"
 
 import Welcome                          from "@/components/Welcome.vue"
@@ -23,7 +24,13 @@ declare module "vue-property-decorator" {
 
 // -- =====================================================================================
 
-export function route ( address: TS.here, props?: {}, init?: boolean ) {
+export function route ( address: TS.here, props?: any|{ flip?: string }, init?: boolean ) {
+
+    // .. define default value
+    if ( !props ) {
+        if ( address === "Unity" ) props = { flip: "flipLeft" };
+        else if ( address === "Welcome" ) props = { flip: "fade" };
+    }
 
     // .. register pageStack
     // let stack = store.state.routeStack;
@@ -32,19 +39,18 @@ export function route ( address: TS.here, props?: {}, init?: boolean ) {
 
     let paths: TS.Path = {
 
-        Welcome: { page: Welcome, duration: 300, transition: "flipLeft",    },
-        Base_00: { page: Base_00, duration: 300, transition: "flipLeft",    },
-        // Base_01: { page: Base_01, duration: 300, transition: "flipLeft",    },
-        Qertas:  { page: Qertas,  duration: 300, transition: "flipRight",    },
-        Paper:   { page: Paper,   duration: 300, transition: "flipRight",    },
-        Maktub:  { page: Maktub,  duration: 300, transition: "flipRight",    },
-        // Qertas:  { page: Qertas , duration: 300, transition: "slideTop",    },
-        // Najwa:   { page: Najwa  , duration: 300, transition: "slideTop",    },
-        // Lookup:  { page: Lookup , duration: 300, transition: "slideRight",  },
+        Welcome: { page: Welcome, duration: 300, transition: props.flip,            },
+        Base_00: { page: Base_00, duration: 300, transition: "flipRight",           },
+        // Base_01: { page: Base_01, duration: 300, transition: "flipLeft",         },
+        Qertas:  { page: Qertas,  duration: 300, transition: "flipLeft",            },
+        Paper:   { page: Paper,   duration: 300, transition: "flipLeft",            },
+        Maktub:  { page: Maktub,  duration: 300, transition: "flipLeft",            },
+        // Najwa:   { page: Najwa  , duration: 300, transition: "slideTop",         },
+        // Lookup:  { page: Lookup , duration: 300, transition: "slideRight",       },
 
         Unity:   {
             page: Unity ,
-            transition: init ? "fade" : "flipRight",
+            transition: props.flip,
             duration: init ? 500 : 300
         },
 
