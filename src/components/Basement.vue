@@ -146,16 +146,9 @@ backButtonCtl ( e: NS.AndroidActivityEventData|any ) {
 // -- =====================================================================================
 
 swipeControl ( args: NS.SwipeGestureEventData ) {
-console.log(store.state.here);
 
-try {
-        if ( args.direction === NS.SwipeDirection.left ) this.backButtonCtl( { fake: true } );
-console.log(args.direction);
+    if ( args.direction === NS.SwipeDirection.left ) this.backButtonCtl( { fake: true } );
 
-} catch (e) {
-    console.log(e);
-    
-}
 }
 
 // -- =====================================================================================

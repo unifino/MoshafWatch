@@ -83,6 +83,7 @@ scrollTo ( step: 1|-1 ) {
 
     // .. apply step
     this.scrollStep += step;
+
     // .. limit step corrector
     let k_s = Object.keys( this.$refs ).filter( x => x.includes( "textRow" ) );
     if ( this.scrollStep < 0 ) this.scrollStep = 0;

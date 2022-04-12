@@ -183,32 +183,37 @@ scrollTo ( step: 1|-1 ) {
 
     // .. apply step
     this.scrollStep += step;
+
     // .. limit step corrector
     let k_s = Object.keys( this.$refs ).filter( x => x.includes( "kalam" ) );
     if ( this.scrollStep < 0 ) this.scrollStep = 0;
-    if ( this.scrollStep > k_s.length -1 ) this.scrollStep = k_s.length -1;
+    if ( this.scrollStep > k_s.length -2 ) this.scrollStep = k_s.length -2;
 
     // .. skip number
-    if ( this.$refs[ "kalam_" + this.scrollStep ][0].myType === "number" ) 
+    if ( this.$refs[ "kalam_" + this.scrollStep ][0].myType === "number" )
         step === 1 ? this.scrollStep++ : this.scrollStep--;
-
-    let sigma = 23;
-    for ( let i=0; i<this.scrollStep-1; i++ )
-        sigma += ( this.$refs[ "kalam_" + i ][0] as any ).nativeView.getActualSize().height;
+    // .. skip ESM
+    // ! there is a bug in reverse mode!
+    if ( this.scrollStep>0 && this.$refs[ "kalam_" + this.scrollStep ][0].myType === "ESM" )
+        step === 1 ? this.scrollStep++ : this.scrollStep--;
 
     let max_H = qertas.getActualSize().height;
 
-    // .. resolve a bug
-    if ( !this.$refs[ "kalam_" + this.scrollStep ] ) this.scrollStep--;
-
-    let el = this.$refs[ "kalam_" + this.scrollStep ][0].nativeView;
+    let sigma = 14;
+    for ( let i=0; i<this.scrollStep; i++ ) {
+        sigma += <any>this.$refs[ "kalam_" + i ][0].nativeView.getActualSize().height;
+        if ( this.$refs[ "kalam_" + i ][0].myType === "ESM" ) sigma -= 23 +10 + 5 +1;
+    }
+    // ..centering
+    let el = ( this.$refs[ "kalam_" + this.scrollStep ][0] as any ).nativeView;
     let h = el.getActualSize().height;
+    sigma += (h/2) - (max_H /2);
 
     // .. corrector
-    if ( h <= max_H ) sigma -= (max_H - h) /2;
+    // if ( h > max_H ) sigma -= (max_H - h) /4;
     if ( this.scrollStep < 1 ) sigma = 0;
 
-    qertas.scrollToVerticalOffset( sigma, step > 0 );
+    qertas.scrollToVerticalOffset( sigma, ~step );
 
 }
 

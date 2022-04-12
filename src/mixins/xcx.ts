@@ -40,8 +40,6 @@ export function down_Cloud( filter: boolean = true ): Promise<void> {
 
         NS.Http.getJSON( url ).then(
             ( res: TS.cloud_response ) => {
-                console.log(res);
-                
 
                 if ( res.status === 200 ) {
                     // .. soft registration of data
@@ -78,8 +76,6 @@ export function up_Cloud(): Promise<void> {
 
     let url = cloudURL + "upload";
 
-    console.log(url);
-    
     return new Promise( (rs, rx) => {
         try {
             console.log("4");
