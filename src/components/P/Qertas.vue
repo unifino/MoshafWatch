@@ -177,9 +177,24 @@ rouh ( ayat: number[] ) {
 // -- =====================================================================================
 
 scrollStep = 1;
+scrollMiniStep = 0;
 scrollTo ( step: 1|-1 ) {
 
     let qertas = ( this.$refs as any ).qertas.nativeView;
+    let max_H = qertas.getActualSize().height;
+
+    // .. first long ayah -- odd approach
+    let el_1 = ( this.$refs[ "kalam_" + this.scrollStep ][0] as any ).nativeView;
+    let h_1 = el_1.getActualSize().height;
+    if ( h_1/max_H > 1 ) {
+        this.scrollMiniStep += step;
+        if ( step === 1 && this.scrollStep === 1 )
+            qertas.scrollToVerticalOffset( h_1/2, ~step );
+        // ! skipped this line
+        // if ( step === -1 && this.scrollStep )
+        if ( this.scrollMiniStep === 1 ) return 0;
+        else this.scrollMiniStep = 0;
+    }
 
     // .. apply step
     this.scrollStep += step;
@@ -197,8 +212,6 @@ scrollTo ( step: 1|-1 ) {
     if ( this.scrollStep>0 && this.$refs[ "kalam_" + this.scrollStep ][0].myType === "ESM" )
         step === 1 ? this.scrollStep++ : this.scrollStep--;
 
-    let max_H = qertas.getActualSize().height;
-
     let sigma = 14;
     for ( let i=0; i<this.scrollStep; i++ ) {
         sigma += <any>this.$refs[ "kalam_" + i ][0].nativeView.getActualSize().height;
@@ -207,6 +220,7 @@ scrollTo ( step: 1|-1 ) {
     // ..centering
     let el = ( this.$refs[ "kalam_" + this.scrollStep ][0] as any ).nativeView;
     let h = el.getActualSize().height;
+
     sigma += (h/2) - (max_H /2);
 
     // .. corrector
