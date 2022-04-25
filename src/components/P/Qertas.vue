@@ -177,7 +177,7 @@ rouh ( ayat: number[] ) {
 // -- =====================================================================================
 
 scrollStep = 1;
-scrollMiniStep = 0;
+temp_fuse = true;
 scrollTo ( step: 1|-1 ) {
 
     let qertas = ( this.$refs as any ).qertas.nativeView;
@@ -186,14 +186,12 @@ scrollTo ( step: 1|-1 ) {
     // .. first long ayah -- odd approach
     let el_1 = ( this.$refs[ "kalam_" + this.scrollStep ][0] as any ).nativeView;
     let h_1 = el_1.getActualSize().height;
-    if ( h_1/max_H > 1 ) {
-        this.scrollMiniStep += step;
-        if ( step === 1 && this.scrollStep === 1 )
-            qertas.scrollToVerticalOffset( h_1/2, ~step );
-        // ! skipped this line
-        // if ( step === -1 && this.scrollStep )
-        if ( this.scrollMiniStep === 1 ) return 0;
-        else this.scrollMiniStep = 0;
+    if ( this.temp_fuse && h_1/max_H > 1 ) {
+        if ( step === 1 && this.scrollStep === 1 ) {
+            qertas.scrollToVerticalOffset( h_1/2 +23, ~step );
+            this.temp_fuse = false;
+            return 0;
+        }
     }
 
     // .. apply step
