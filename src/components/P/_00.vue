@@ -48,7 +48,7 @@ import { Vue, Component, Prop }         from "vue-property-decorator"
 import * as tools                       from "@/mixins/tools"
 import store                            from "@/store/store"
 import { route }                        from '@/mixins/router'
-import { asma, Quran }                  from "@/db/Q/Quran"
+import { asma, Quran }                  from "@/../../db/Q/Quran"
 
 // -- =====================================================================================
 

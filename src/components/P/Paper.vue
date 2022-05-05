@@ -32,7 +32,7 @@
 
 import { Vue, Component, Prop }         from "vue-property-decorator"
 import * as tools                       from "@/mixins/tools"
-import { asma, Quran }                  from "@/db/Q/Quran"
+import { asma, Quran }                  from "@/../../db/Q/Quran"
 import { Najawa }                       from "@/db/N/Al-Najawa"
 import store                            from "@/store/store"
 

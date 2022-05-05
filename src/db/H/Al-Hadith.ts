@@ -1,12 +1,12 @@
 import * as TS                          from "@/../types/myTypes"
 
-const n = require( "./نهج‌البلاغة.json" ) as TS.HDB;
-const f = require( "./نهج‌الفصاحة.json" ) as TS.HDB;
+const n = require( "@/../../db/H/نهج‌البلاغة.json" ) as TS.HDB;
+const f = require( "@/../../db/H/نهج‌الفصاحة.json" ) as TS.HDB;
 // const k = require( "./الكافي.json" ) as TS.HDB;
 // const v = require( "./وسائل‌الشيعة.json" ) as TS.HDB;
 // const m = require( "./مستدرك‌الوسائل.json" ) as TS.HDB;
 // const a = require( "./more.json" ) as TS.HDB;
-const z = require( "./keep.json" ) as TS.HDB;
+const z = require( "@/../../db/H/keep.json" ) as TS.HDB;
 
 // .. temporary collection
 let nHadith: TS.hadithCell[] = [];

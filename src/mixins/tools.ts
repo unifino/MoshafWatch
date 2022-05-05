@@ -1,8 +1,8 @@
 import * as TS                          from "@/../types/myTypes"
 import * as storage                     from "@/mixins/storage"
-import { asma, Quran }                  from "@/db/Q/Quran"
+import { asma, Quran }                  from "@/../../db/Q/Quran"
 import { Hadith }                       from "@/db/H/Al-Hadith"
-import { c_map }                        from "@/db/H/info"
+import { c_map }                        from "@/../../db/H/info"
 // * tns plugin add nativescript-toast
 import * as Toast                       from "nativescript-toast"
 import store                            from "@/store/store"

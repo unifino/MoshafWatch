@@ -52,7 +52,7 @@
 
 import { Vue, Component, Prop }         from "vue-property-decorator"
 import * as tools                       from "@/mixins/tools"
-import { asma, Quran }                  from "@/db/Q/Quran"
+import { asma, Quran }                  from "@/../../db/Q/Quran"
 import Kalam                            from "@/components/X/Kalam.vue"
 import * as TS                          from "@/../types/myTypes"
 import store                            from "@/store/store"

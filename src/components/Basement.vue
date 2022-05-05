@@ -18,7 +18,7 @@
 
 import { Vue, Component, Prop }         from "vue-property-decorator"
 import Welcome                          from "@/components/Welcome.vue"
-import { asma, Quran }                  from "@/db/Q/Quran"
+import { asma, Quran }                  from "@/../../db/Q/Quran"
 import * as tools                       from "@/mixins/tools"
 import * as NS                          from "@nativescript/core"
 import * as Cloud                       from "@/mixins/cloud"
